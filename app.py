@@ -20,9 +20,13 @@ if url:
     gs_manager.add_worksheet(url, "EDICOES")
     gs_manager.add_worksheet(url, "CONTROLES")
     gs_manager.add_worksheet(url, "CONSOLES")
+    gs_manager.add_worksheet(url, "TODAS")
     products = gs_manager.read_sheet(url, "EDICOES")
     controles = gs_manager.read_sheet(url, "CONTROLES")
     consoles = gs_manager.read_sheet(url, "CONSOLES")
+
+    tudo = gs_manager.read_sheet(url, "TODAS")
+
 
 data = pd.concat([controles, consoles], ignore_index=True)
 # Exibição da galeria
@@ -40,7 +44,7 @@ with tab1:
         cols = st.columns(cols_per_row)
         for col, (_, item) in zip(cols, row.iterrows()):
             with col:
-                st.image(item["IMG"], caption=item["TITLE"], width=100)
+                st.image(item["IMG"], caption=item["TITLE"], width=80)
 
 with tab2:
     # Galeria para "CONTROLES"
@@ -49,7 +53,7 @@ with tab2:
         cols = st.columns(cols_per_row)
         for col, (_, item) in zip(cols, row.iterrows()):
             with col:
-                st.image(item["IMG"], caption=item["TITLE"], width=100)
+                st.image(item["IMG"], caption=item["TITLE"], width=80)
 
 with tab3:
     # Galeria para "EDICOES"
@@ -58,22 +62,22 @@ with tab3:
         cols = st.columns(cols_per_row)
         for col, (_, item) in zip(cols, row.iterrows()):
             with col:
-                st.image(item["IMG"], caption=item["TITLE"], width=100)
+                st.image(item["IMG"], caption=item["TITLE"], width=70)
 
 with tab5:
     st.dataframe(
-        data,
+        tudo,
         column_config={
             "IMG": st.column_config.ImageColumn(
                 "Preview", help="Preview da imagem", width='small'
             )
         }, use_container_width=True)
 
-with tab5:
-    st.dataframe(
-        products,
-        column_config={
-            "IMG": st.column_config.ImageColumn(
-                "Preview", help="Preview da imagem", width='small'
-            )
-        }, use_container_width=True)
+# with tab5:
+#     st.dataframe(
+#         tudo,
+#         column_config={
+#             "IMG": st.column_config.ImageColumn(
+#                 "Preview", help="Preview da imagem", width='small'
+#             )
+#         }, use_container_width=True)
